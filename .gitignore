@@ -1,3 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+
+# Database
+db.sqlite
+
+# Env
+.env
 cookproject/
 
-__pycache__/
+# Mac
+.DS_Store
+
+# Logs
+*.log
