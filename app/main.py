@@ -1,17 +1,20 @@
+import os
+
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-from database import get_connection, init_db
-from models import Item
+from app.database import get_connection, init_db
+from app.models import Item
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 app = FastAPI()
 
 # init DB au démarrage
 init_db()
 
-templates = Jinja2Templates(directory="app/templates")
-
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 
 ###############
 # GET INVENTAIRE
@@ -25,10 +28,13 @@ def read_items(request: Request):
 
     conn.close()
 
-    return templates.TemplateResponse("index.html", {
-        "request": request,
-        "items": items
-    })
+    return templates.TemplateResponse(
+        "index.html",
+        {
+            "request": request,
+            "items": items
+        }
+    )
 
 
 ################
