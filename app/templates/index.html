@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kitchen Inventory</title>
+</head>
+<body>
+
+<h1>Inventaire cuisine</h1>
+
+<!-- ➕ Formulaire ajout -->
+<form action="/add" method="post">
+    <input type="text" name="name" placeholder="Nom" required>
+    <input type="number" name="quantity" placeholder="Quantité" required>
+    <input type="text" name="location" placeholder="frigo / sec" required>
+    <button type="submit">Ajouter</button>
+</form>
+
+<hr>
+
+<!-- 📋 Tableau -->
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Quantité</th>
+        <th>Lieu</th>
+        <th>Action</th>
+    </tr>
+
+    {% for item in items %}
+    <tr>
+        <td>{{ item[0] }}</td>
+        <td>{{ item[1] }}</td>
+        <td>{{ item[2] }}</td>
+        <td>{{ item[3] }}</td>
+        <td>
+            <form action="/delete/{{ item[0] }}" method="post">
+                <button type="submit">Supprimer</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
