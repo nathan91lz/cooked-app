@@ -1,6 +1,6 @@
 import os
 
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI, Request, Form, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
@@ -45,10 +45,17 @@ def add_item(
     quantity: int = Form(...),
     location: str = Form(...)
 ):
+    
+    name= name.strip().lower()
+
+    if quantity <= 0:
+        raise HTTPException(
+            status_code=400,
+            detail="La quantité doit être supérieure à 0"
+        )
+
     conn = get_connection()
     cursor = conn.cursor()
-
-    name= name.strip().lower()
 
     cursor.execute("""
         INSERT INTO inventory (name, quantity, location)
