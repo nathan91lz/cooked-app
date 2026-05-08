@@ -10,13 +10,14 @@ def init_db():
     cursor = conn.cursor()
 
     cursor.execute("""
-    CREATE TABLE IF NOT EXISTS inventory (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        quantity INTEGER NOT NULL,
-        location TEXT NOT NULL
-    )
-    """)
+        CREATE TABLE IF NOT EXISTS inventory (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            quantity INTEGER NOT NULL,
+            location TEXT NOT NULL,
+            UNIQUE(name, location)
+        )
+        """)
 
     conn.commit()
     conn.close()

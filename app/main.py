@@ -39,16 +39,23 @@ def read_items(request: Request):
 
 ################
 # ADD ITEM (SETTER)
-
 @app.post("/add")
-def add_item(name: str = Form(...), quantity: int = Form(...), location: str = Form(...)):
+def add_item(
+    name: str = Form(...),
+    quantity: int = Form(...),
+    location: str = Form(...)
+):
     conn = get_connection()
     cursor = conn.cursor()
 
-    cursor.execute(
-        "INSERT INTO inventory (name, quantity, location) VALUES (?, ?, ?)",
-        (name, quantity, location)
-    )
+    name= name.strip().lower()
+
+    cursor.execute("""
+        INSERT INTO inventory (name, quantity, location)
+        VALUES (?, ?, ?)
+        ON CONFLICT(name, location)
+        DO UPDATE SET quantity = quantity + excluded.quantity
+    """, (name, quantity, location))
 
     conn.commit()
     conn.close()
