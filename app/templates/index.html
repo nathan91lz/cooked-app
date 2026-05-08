@@ -10,8 +10,19 @@
 <!-- Formulaire ajout -->
 <form action="/add" method="post">
     <input type="text" name="name" placeholder="Nom" required>
+
     <input type="number" name="quantity" placeholder="Quantité" required>
+
+    <select name="unit" required>
+        <option value="pièce">Pièce</option>
+        <option value="kg">Kg</option>
+        <option value="g">Grammes</option>
+        <option value="litre">Litre</option>
+        <option value="ml">mL</option>
+    </select>
+
     <input type="text" name="location" placeholder="frigo / sec" required>
+
     <button type="submit">Ajouter</button>
 </form>
 
@@ -23,6 +34,7 @@
         <th>ID</th>
         <th>Nom</th>
         <th>Quantité</th>
+        <th>Unité</th>
         <th>Lieu</th>
         <th>Action</th>
     </tr>
@@ -33,6 +45,7 @@
         <td>{{ item[1] }}</td>
         <td>{{ item[2] }}</td>
         <td>{{ item[3] }}</td>
+        <td>{{ item[4] }}</td>
         <td>
             <form action="/delete/{{ item[0] }}" method="post">
                 <button type="submit">Supprimer</button>

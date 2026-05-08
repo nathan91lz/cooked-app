@@ -14,8 +14,9 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             quantity INTEGER NOT NULL,
+            unit TEXT NOT NULL,
             location TEXT NOT NULL,
-            UNIQUE(name, location)
+            UNIQUE(name, location, unit)
         )
         """)
 

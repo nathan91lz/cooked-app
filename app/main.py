@@ -43,6 +43,7 @@ def read_items(request: Request):
 def add_item(
     name: str = Form(...),
     quantity: int = Form(...),
+    unit: str = Form(...),
     location: str = Form(...)
 ):
     
@@ -58,11 +59,11 @@ def add_item(
     cursor = conn.cursor()
 
     cursor.execute("""
-        INSERT INTO inventory (name, quantity, location)
-        VALUES (?, ?, ?)
-        ON CONFLICT(name, location)
+        INSERT INTO inventory (name, quantity, unit, location)
+        VALUES (?, ?, ?, ?)
+        ON CONFLICT(name, location, unit)
         DO UPDATE SET quantity = quantity + excluded.quantity
-    """, (name, quantity, location))
+    """, (name, quantity, unit, location))
 
     conn.commit()
     conn.close()
