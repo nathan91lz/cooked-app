@@ -36,6 +36,23 @@ def read_items(request: Request):
         }
     )
 
+@app.get("/shopping", response_class=HTMLResponse)
+def shopping_page(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "shopping.html",
+        {}
+    )
+
+
+@app.get("/recipes", response_class=HTMLResponse)
+def recipes_page(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "recipes.html",
+        {}
+    )
+
 
 ################
 # ADD ITEM (SETTER)
